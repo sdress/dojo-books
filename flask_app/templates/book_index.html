@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Books</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css')}}">
+</head>
+<body>
+    <header>
+    </header>
+    <main>
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <h1>New Book</h1>
+                    <form action="/books/create" method = "POST" class="form-group">
+                        <label for="title">Title: </label>
+                        <input type="text" name="title" class="form-control">
+                        <label for="num_of_pages">Number of Pages: </label>
+                        <input type="number" name="num_of_pages" class="form-control">
+                        <input type="submit" value="Create" class="btn btn-primary">
+                    </form>
+                </div>
+                <div class="col">
+                    <h1>All Books</h1>
+                    <div class="thing_list">
+                        {% for book in books %}
+                        <a href="/books/{{book.id}}">{{book.title}}</a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <a href="/authors">Home</a>
+    </footer>
+</body>
+</html>

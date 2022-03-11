@@ -1,0 +1,13 @@
+.thing_list{
+    border: 2px solid black;
+    display: flex;
+    flex-direction: column;
+}
+
+.thing_list a {
+    margin-left: 10px;
+}
+
+.btn {
+    display: block;
+}
