@@ -20,8 +20,13 @@ def create_author():
 @app.route('/authors/<int:id>')
 def show_author_favs(id):
     data = {'id': id}
-    author = Author.get_one(data)
-    favorite_books = Author.get_favorites(data)
-    print(favorite_books)
-    all_books = Book.get_all()
-    return render_template('author_fav.html', author=author, favorites=favorite_books, books=all_books)
+    return render_template('author_fav.html', author=Author.get_one(data), favorites=Author.get_favorites(data), books=Book.get_all())
+
+@app.route('/authors/<int:id>/add', methods = ['POST'])
+def add_fav_book(id):
+    data = {
+        'author_id': id,
+        'book_id': request.form['title']
+    }
+    Author.add_favorite(data)
+    return redirect(f'/authors/{id}')
