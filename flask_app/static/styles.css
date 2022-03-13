@@ -10,4 +10,9 @@
 
 .btn {
     display: block;
+    margin: 10px 0px;
+}
+
+footer a {
+    margin-left: 20px;
 }

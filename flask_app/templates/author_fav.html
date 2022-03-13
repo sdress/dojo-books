@@ -22,10 +22,10 @@
                             <th>Number of Pages</th>
                         </thead>
                         <tbody>
-                            {% for item in favorites %}
+                            {% for row in favorites %}
                             <tr>
-                                <td>{{item.title}}</td>
-                                <td>{{item.num_of_pages}}</td>
+                                <td>{{row.title}}</td>
+                                <td>{{row.num_of_pages}}</td>
                             </tr>
                             {% endfor %}
                         </tbody>
@@ -33,11 +33,11 @@
                 </div>
                 <div class="col">
                     <h1>Add Author's Favorites</h1>
-                    <form action="/authors/add" method = "POST" class="form-group">
+                    <form action="/authors/{{author.id}}/add" method = "POST" class="form-group">
                         <label for="title">Book: </label>
                         <select name="title">
                             {% for book in books %}
-                            {% if book not in favorites %}
+                            {% if book.id not in favorites|map(attribute='id') %}
                             <option value={{book.id}}>{{book.title}}</option>
                             {% endif %}
                             {% endfor %}
