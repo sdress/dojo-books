@@ -1,4 +1,7 @@
 from flask_app.config.mysqlconnection import connectToMySQL
+from flask_app.models import author
+
+
 
 db = 'books_schema'
 
@@ -14,6 +17,11 @@ class Book:
     @classmethod
     def create(cls, data):
         query = "INSERT INTO books (title, num_of_pages, created_at, updated_at) VALUES ( %(title)s, %(num_of_pages)s, NOW(), NOW() );"
+        return connectToMySQL(db).query_db(query, data)
+
+    @classmethod
+    def add_favorite(cls, data):
+        query = "INSERT INTO favorites (author_id, book_id) VALUES (%(author_id)s, %(book_id)s);"
         return connectToMySQL(db).query_db(query, data)
 
     # read
@@ -33,6 +41,15 @@ class Book:
         if len(results) < 1:
             return False
         return cls(results[0])
+    
+    @classmethod
+    def get_favorites(cls, data):
+        query = "SELECT authors.* FROM authors LEFT JOIN favorites ON favorites.author_id = authors.id LEFT JOIN books ON favorites.book_id = books.id WHERE book_id= %(id)s;"
+        results = connectToMySQL(db).query_db(query, data)
+        fav_authors = []
+        for row in results:
+            fav_authors.append( author.Author(row) )
+        return fav_authors
 
     # update
     @classmethod
